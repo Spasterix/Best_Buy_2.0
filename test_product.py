@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 """
 Test module for the Product class.
 """
@@ -105,10 +105,10 @@ def test_product_manual_activation():
     """Test manual activation and deactivation of products."""
     product = Product("Test Product", price=100, quantity=5)
     assert product.active is True
-
+    
     product.deactivate()
     assert product.active is False
-
+    
     product.activate()
     assert product.active is True
 
