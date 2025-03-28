@@ -53,7 +53,7 @@ class Store:
         Returns:
             Total number of items across all products
         """
-        return sum(product.get_quantity() for product in self.products)
+        return sum(product.quantity for product in self.products)
 
     def get_all_products(self) -> List[Product]:
         """
@@ -62,7 +62,7 @@ class Store:
         Returns:
             List of active products
         """
-        return [product for product in self.products if product.is_active()]
+        return [product for product in self.products if product.active]
 
     def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
         """
