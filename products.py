@@ -47,7 +47,7 @@ class Product:
         self._active = quantity > 0
         self._promotion = None
         
-        logging.info(f"Created new product: {self.show()}")
+        logging.info(f"Created new product: {self}")
         
     @property
     def name(self) -> str:
@@ -58,6 +58,22 @@ class Product:
     def price(self) -> float:
         """Returns the price of the product."""
         return self._price
+        
+    @price.setter
+    def price(self, value: float) -> None:
+        """
+        Sets the price of the product.
+        
+        Args:
+            value: New price of the product
+            
+        Raises:
+            ValueError: If price is negative
+        """
+        if value < 0:
+            raise ValueError("Price cannot be negative")
+        self._price = value
+        logging.info(f"Price changed for {self.name}: {self._price} -> {value}")
         
     @property
     def quantity(self) -> int:
@@ -126,17 +142,59 @@ class Product:
             self._active = False
             logging.info(f"Product deactivated: {self.name}")
         
-    def show(self) -> str:
+    def __str__(self) -> str:
         """
         Creates a string representation of the product.
         
         Returns:
             Formatted product information as string
         """
-        result = f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        result = f"{self.name}, Price: ${self.price}, Quantity: {self.quantity}"
         if self.promotion:
             result += f" [{self.promotion.name}]"
         return result
+        
+    def __lt__(self, other: 'Product') -> bool:
+        """
+        Compares products by price.
+        
+        Args:
+            other: Product to compare with
+            
+        Returns:
+            True if this product's price is less than other's price
+        """
+        if not isinstance(other, Product):
+            return NotImplemented
+        return self.price < other.price
+        
+    def __gt__(self, other: 'Product') -> bool:
+        """
+        Compares products by price.
+        
+        Args:
+            other: Product to compare with
+            
+        Returns:
+            True if this product's price is greater than other's price
+        """
+        if not isinstance(other, Product):
+            return NotImplemented
+        return self.price > other.price
+        
+    def __eq__(self, other: 'Product') -> bool:
+        """
+        Checks if two products are equal.
+        
+        Args:
+            other: Product to compare with
+            
+        Returns:
+            True if products have same name and price
+        """
+        if not isinstance(other, Product):
+            return NotImplemented
+        return self.name == other.name and self.price == other.price
         
     def buy(self, quantity: int) -> float:
         """
@@ -207,7 +265,7 @@ class NonStockedProduct(Product):
         Returns:
             Formatted product information as string
         """
-        result = f"{self.name} (Digital), Price: {self.price}"
+        result = f"{self.name} (Digital), Price: ${self.price}"
         if self.promotion:
             result += f" [{self.promotion.name}]"
         return result
@@ -275,7 +333,7 @@ class LimitedProduct(Product):
         Returns:
             Formatted product information as string
         """
-        result = f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Max per order: {self.maximum}"
+        result = f"{self.name}, Price: ${self.price}, Quantity: {self.quantity}, Max per order: {self.maximum}"
         if self.promotion:
             result += f" [{self.promotion.name}]"
         return result

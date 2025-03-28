@@ -86,6 +86,35 @@ class Store:
             total_price += product.buy(quantity)
             
         return total_price
+        
+    def __contains__(self, product: Product) -> bool:
+        """
+        Checks if a product exists in the store.
+        
+        Args:
+            product: Product to check for
+            
+        Returns:
+            True if product is in store, False otherwise
+        """
+        return product in self.products
+        
+    def __add__(self, other: 'Store') -> 'Store':
+        """
+        Combines two stores into a new store.
+        
+        Args:
+            other: Store to combine with
+            
+        Returns:
+            New store containing products from both stores
+        """
+        if not isinstance(other, Store):
+            return NotImplemented
+            
+        # Create new store with products from both stores
+        combined_products = self.products + other.products
+        return Store(combined_products)
 
 
 def main():

@@ -86,11 +86,11 @@ def test_product_purchase_negative_quantity():
     assert product.quantity == 5  # Verify quantity remains unchanged
 
 
-def test_product_show_method():
-    """Test the string representation of a product."""
+def test_product_str_method():
+    """Test the string magic method (__str__) of a product."""
     product = Product("Test Product", price=100, quantity=5)
-    expected = "Test Product, Price: 100, Quantity: 5"
-    assert product.show() == expected
+    expected = "Test Product, Price: $100, Quantity: 5"
+    assert str(product) == expected
 
 
 def test_product_set_quantity_validation():

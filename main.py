@@ -29,7 +29,7 @@ def list_products(store_instance: store.Store) -> None:
     print("\nAvailable Products:")
     print("-----------------")
     for idx, product in enumerate(store_instance.get_all_products(), 1):
-        print(f"{idx}. {product.show()}")
+        print(f"{idx}. {product}")
 
 
 def show_total_amount(store_instance: store.Store) -> None:
@@ -142,6 +142,12 @@ def main():
             break
         else:
             print("\nInvalid choice! Please enter a number between 1 and 4.")
+
+    # Test other methods
+    print(f"Total quantity in store: {best_buy.get_total_quantity()}")
+    print("Active products:")
+    for product in best_buy.get_all_products():
+        print(product)
 
 
 if __name__ == "__main__":
