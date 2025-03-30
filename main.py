@@ -136,7 +136,6 @@ def main():
             show_total_amount(best_buy)
         elif choice == '3':
             make_order(best_buy)
-            reset_product_quantities(product_list)  # Reset quantities after order
         elif choice == '4':
             print("\nThank you for using the Store Management System!")
             break
